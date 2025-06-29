@@ -8,7 +8,7 @@ on:
     # - cron: "0 0 * * *" # Runs daily at midnight UTC
 
 permissions:
-  contents: write  # Required for pushing model updates
+  contents: write  # Needed to commit model changes
 
 jobs:
   build-and-train:
@@ -30,8 +30,8 @@ jobs:
         with:
           node-version: '22.12.0'
 
-      - name: 📥 Install dependencies
-        run: npm install
+      - name: 📥 Install dependencies (include devDependencies)
+        run: npm install --include=dev
 
       - name: 🏗️ Build TypeScript
         run: npm run build
