@@ -105,8 +105,8 @@ export const loadCombinedTrainingData = async (): Promise<{ inputs: number[]; fu
 };
 
 
-const FUEL_MODEL_PATH = 'file://ai-models/models/fuel_predictor';
-const ROUTE_MODEL_PATH = 'file://ai-models/models/route_optimizer';
+const FUEL_MODEL_PATH = 'file://./ai-models/models/fuel_predictor';
+const ROUTE_MODEL_PATH = 'file://./ai-models/models/route_optimizer';
 
 const createModel = (inputShape: number): tf.Sequential => {
   const model = tf.sequential();
