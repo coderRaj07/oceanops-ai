@@ -137,8 +137,10 @@ const predictAndUpdateForecasts = async () => {
       ];
   
       const inputTensor = tf.tensor2d([input]);
-      const predictedDays = (await model.predict(inputTensor).data())[0];
-  
+      const output = model.predict(inputTensor);
+      const result = Array.isArray(output) ? output[0] : output;
+      const predictedDays = (await result.data())[0];
+
       const nextDate = new Date();
       nextDate.setDate(nextDate.getDate() + Math.round(predictedDays));
   
