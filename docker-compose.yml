@@ -1,0 +1,32 @@
+version: '3.8'
+
+services:
+  app:
+    build: .
+    container_name: ai-ship-app
+    ports:
+      - "${PORT:-3000}:3000" # fallback to 3000 if not set
+    env_file:
+      - .env
+    restart: unless-stopped
+    depends_on:
+      - mongo
+    environment:
+      - MONGO_URI=${MONGO_URI}  # use .env value
+
+# Since we will be using value from .env external sources
+
+#   mongo:
+#     image: mongo:7
+#     container_name: mongo-db
+#     ports:
+#       - "27017:27017"
+#     volumes:
+#       - mongo_data:/data/db
+#     restart: unless-stopped
+#     # Optional: uncomment if you want to seed/init the database
+#     # environment:
+#     #   MONGO_INITDB_DATABASE: yourdbname
+
+# volumes:
+#   mongo_data:
