@@ -1,0 +1,51 @@
+name: 🧠 Train and Deploy AI Models
+
+on:
+  push:
+    branches: [main]
+  schedule:
+    - cron: '*/15 * * * *'  # Every 15 minutes for testing
+    # - cron: "0 0 * * *" # Runs daily at midnight UTC
+
+permissions:
+  contents: write  # Required for pushing model updates
+
+jobs:
+  build-and-train:
+    runs-on: ubuntu-latest
+
+    env:
+      NODE_ENV: production
+      MONGO_URI: ${{ secrets.MONGO_URI }}
+      OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+      WEATHER_API_KEY: ${{ secrets.WEATHER_API_KEY }}
+      PORT: 3000
+
+    steps:
+      - name: ⬇️ Checkout code
+        uses: actions/checkout@v3
+
+      - name: 📦 Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '22.12.0'
+
+      - name: 📥 Install dependencies
+        run: npm install
+
+      - name: 🏗️ Build TypeScript
+        run: npm run build
+
+      - name: 🧪 (Optional) Run tests
+        run: echo "No tests defined" # TO DO: Replace with `npm test` 
+
+      - name: 🧠 Run training script
+        run: npx ts-node ai-models/trainModels.ts
+
+      - name: 🔂 Commit & Push updated model files
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add ai-models/models/
+          git commit -m "🤖 retrain: updated fuel and ETA prediction models" || echo "No changes to commit"
+          git push
