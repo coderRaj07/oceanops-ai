@@ -1,7 +1,6 @@
 import { Request, Response } from 'express';
 import Voyage from '../models/Voyage';
 import { predictETAWithAI, predictFuelWithAI } from '../../ai-models/mlModel';
-// import { optimizeRoute, predictFuel } from '../services/ai';
 
 export const planVoyage = async (req: Request, res: Response) => {
   try {
