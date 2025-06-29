@@ -39,8 +39,10 @@ jobs:
       - name: 🧪 (Optional) Run tests
         run: echo "No tests defined" # TO DO: Replace with `npm test` 
 
-      - name: 🧠 Run training script
-        run: npx ts-node ai-models/trainModels.ts
+      - name: 🧠 Run training scripts
+        run: | 
+              "npx ts-node ai-models/trainModels.ts"
+              "npx ts-node ai-models/trainMaintainanceModel.ts"
 
       - name: 🔂 Commit & Push updated model files
         run: |
