@@ -41,8 +41,8 @@ jobs:
 
       - name: 🧠 Run training scripts
         run: | 
-              "npx ts-node ai-models/trainModels.ts"
-              "npx ts-node ai-models/trainMaintainanceModel.ts"
+              npx ts-node ai-models/trainModels.ts
+              npx ts-node ai-models/trainMaintainanceModel.ts
 
       - name: 🔂 Commit & Push updated model files
         run: |
